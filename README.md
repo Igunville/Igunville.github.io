@@ -1,3 +1,2 @@
-# Igunville.github.io
-# Igunville.github.io
-This is my website repo
+Welcome to my website! 
+my name is Isaac
