@@ -1,3 +1,5 @@
-Welcome to my website! 
+Welcme to my website! 
+
 my name is Isaac
 hello
+whats up
