@@ -6,4 +6,6 @@
 
 - [My fourth journal entry](entries/4.md)
 
+- [My wordpress website](entries/wordpress.md)
+
 
