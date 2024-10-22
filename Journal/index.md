@@ -4,3 +4,6 @@
 
 - [My third journal entry](entries/3.md)
 
+- [My fourth journal entry](entries/4.md)
+
+
