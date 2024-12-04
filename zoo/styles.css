@@ -1,0 +1,12 @@
+body{
+	background-color:PowderBlue;
+	color:DimGray;
+}
+header{
+	background-color:SandyBrown;
+}
+td,th,table{
+	border:1px solid;
+	border-collapse:collapseu;
+	background-color:SandyBrown;
+}
