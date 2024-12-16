@@ -1,5 +1,7 @@
 body{ 
-	background: #f5e1da; 
+	background: #f5e1da;
+	font-size:20pts;
+	font-family:'verdana',sans-serif; 
 }
 	
 header, nav, main{ 
@@ -8,5 +10,25 @@ header, nav, main{
 
 
 footer{ 
-	background:DimGrey; 
-}}
+	background:DimGrey;
+	font-family:'courier new',serif;
+}
+
+#first{
+	text-align:center;
+}
+
+#last{
+	text-align:center;
+}
+
+h1{
+	text-transform:uppercase;
+}
+
+h2{
+	text-transform:uppercase;
+}
+th{
+	text-transform:uppercase;
+}
