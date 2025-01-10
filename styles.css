@@ -1,5 +1,5 @@
 
-img {
+img{
 	width: 100%;
 	height: auto;
 }
@@ -15,15 +15,14 @@ img {
         grid-column-start:1;
 	background: "white";
 }
-#Middle
+#Middle{
         grid-row-start:3;
         grid-column-start:1;
-	background-color: "#000000";
-	font-color: #008B8B;
+	background: "black";
 }
 #Second{
         grid-row-start:2;
-        grid-column-start:1
+        grid-column-start:1;
 	background: #55e0a3;
 
 }
@@ -32,43 +31,4 @@ img {
         grid-column-start:1;
 	background: #4850b9;
 }
-#first{
-        width:100px;
-        border:2px solid
-        margin-left:60px;
-}
-#second{
-        width:20
-        border:2px solid;
-        margin-left:60px;
-}
-#third{
-        width:20
-        border:2px solid;
-        margin-left:60px;
-}
-#fourth{
-        width:20
-        border:2px solid;
-        margin-left:60px;
-}
-#fifth{
-        width:20
-        border:2px solid;
-        margin-left:60px;
-}
-#sixth{
-        width:20
-        border:2px solid;
-        margin-left:60px;
-}
-#seventh{
-        width:20
-        border:2px solid;
-        margin-left:60px;
-}
-#second_first{
-        width:20
-        border:2px solid;
-        margin-left:60px;
-}
+
