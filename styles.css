@@ -1,11 +1,20 @@
 
 img{
 	width: 100%;
-	height: auto;
+	height: 90%;
+}
+body{ 
+	background: #060608;
+	font: 'Helvetica','Arial',sans-serif; 
+}
+h1{
+	font-family: 'Newsreader',serif;
+	text-transform: uppercase;
+	color: #ffffff;
 }
 #grid{
         display:grid;
-        grid-template-rows: 3fr 1fr 1fr 2fr;
+        grid-template-rows: 3fr 1fr 2fr;
         grid-template-columns: 1fr;
         height:80vh;
         text-align:center;
@@ -13,22 +22,18 @@ img{
 #Top{
         grid-row-start:1;
         grid-column-start:1;
-	background: "white";
-}
-#Middle{
-        grid-row-start:3;
-        grid-column-start:1;
-	background: "black";
+        background: "white";
 }
 #Second{
         grid-row-start:2;
         grid-column-start:1;
-	background: #55e0a3;
+        background: #2470a0;
+        gap:10px;
 
 }
 #Bottom{
         grid-row-start:4;
         grid-column-start:1;
-	background: #4850b9;
+        background: #4850b9;
 }
 
