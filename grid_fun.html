@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>10x10 Grid with CSS Grid</title>
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(10, 1fr);
+      width: 100vmin;
+      height: 100vmin;
+      margin:auto;
+    }
+
+    .grid-container div {
+      background-color:black;
+    }
+
+    /* Color specific squares */
+    .grid-container div:nth-child(12),
+    .grid-container div:nth-child(19),
+    .grid-container div:nth-child(23),
+    .grid-container div:nth-child(28),
+    .grid-container div:nth-child(34),
+    .grid-container div:nth-child(35),
+    .grid-container div:nth-child(36),
+    .grid-container div:nth-child(37),
+    .grid-container div:nth-child(43),
+    .grid-container div:nth-child(45),
+    .grid-container div:nth-child(46),
+    .grid-container div:nth-child(48),
+    .grid-container div:nth-child(54),
+    .grid-container div:nth-child(56),
+    .grid-container div:nth-child(57),
+    .grid-container div:nth-child(55),
+    .grid-container div:nth-child(62),
+    .grid-container div:nth-child(63),
+    .grid-container div:nth-child(64),
+    .grid-container div:nth-child(65),
+    .grid-container div:nth-child(66),
+    .grid-container div:nth-child(67),
+    .grid-container div:nth-child(68),
+    .grid-container div:nth-child(69),
+    .grid-container div:nth-child(72),
+    .grid-container div:nth-child(74),
+    .grid-container div:nth-child(77),
+    .grid-container div:nth-child(79),
+    .grid-container div:nth-child(82),
+    .grid-container div:nth-child(84),
+    .grid-container div:nth-child(85),
+    .grid-container div:nth-child(86),
+    .grid-container div:nth-child(87),
+    .grid-container div:nth-child(89){
+        background-color:green;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <!-- 100 divs -->
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+</body>
+</html>
