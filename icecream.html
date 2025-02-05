@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                <title>IceCream Form</title>
+                <script src="js/init.js"></script>
+        </head>
+        <body>
+                <h1>Your Invited to my icecream party</h1>
+		<h3>Please fill out this form.</h3>
+                <form action="https://httpbin.org/post" method="POST">
+                	<label for="email">Email</label>
+                	<input type="email" name="email" id="email">
+<br>
+                	<label for="phone_number">Phone Number</label>
+                	<input type="number" name="phone_number" id="phone_number">
+<br>
+                        <label for="number_of_people">How many people are you bringing?</label>
+                        <input type="number" name="number_of_people" id="number_of_people">
+<br>
+                        <p>What flavor do you want?</p>
+                        <input type="radio" name="flavor" id="Vanilla">
+			 <label for="Vanilla">Vanilla</label>
+<br>
+			<input type="radio" name="flavor" id="ChocolateChip">
+			 <label for="ChocolateChip">Chocolate Chip</label>
+<br>
+			<input type="radio" name="flavor" id="Strawberry">
+		 <label for="Strawberry">Strawberry</label>
+<br>    
+                    <input type="Radio" name="flavor" id="Other">
+			 <label for="Other">Other</label>
+
+
+
+                        <p>What toppings do you want?</p>
+                        <input type="checkbox" name="topping" id="sprinkles">
+                         <label for="sprinkles">Sprinkles</label>
+<br> 
+                       <input type="checkbox" name="topping" id="magic_shell">
+                         <label for="magic_shell">Magic Shell</label>
+<br>
+                        <input type="checkbox" name="topping" id="chocolate">
+                         <label for="chocolate">Chocolate Chips</label>
+<br>
+                        <input type="checkbox" name="topping" id="gummies">
+                         <label for="gummies">Gummy Bears</label>
+<br>
+                        <input type="checkbox" name="topping" id="others">
+                         <label for="others">Other</label>
+<br>
+<br>
+			<label for="entertainment">What entertainment should we have?</label>
+			<select id="entertainment" name="entertainment">
+  				<option value="ballon">Ballon Animals</option>
+  				<option value="bounce">Bounce House</option>
+ 				 <option value="clown">Clown</option>
+  				<option value="cornhole">Cornhole</option>
+                                <option value="dj">DJ</option>
+                                <option value="paint">Face Painting</option>
+                                <option value="Magic">Magician</option>
+			</select>
+<br>
+			<label for="text">What other suggestions do you have?</label>
+
+                        <input type="text" name="text" id="text">
+<br>
+<input type="submit" name="submit"></input>
+</form>        
+</body>
+</html>
+
