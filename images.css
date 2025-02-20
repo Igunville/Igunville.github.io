@@ -1,0 +1,51 @@
+.box1{
+	width: 600px;
+	height: 400px;
+}
+.box2{
+	max-width: 100%
+	max-height: 100%;
+	min-width: 75%;
+	min-height: 75%;
+}
+.box3{
+	align: center;
+}
+.box14{
+	object-fit: cover;
+}
+.box15{
+	object-position: center bottom;
+}
+.box4{
+	border: 200px solid #000;
+	border-radius: 100px 100px 100px 100px;
+}
+.box5{
+	box-shadow: 5px 10px 15px rgba(5, 2, 4, 1);
+}
+.box6{
+	opacity: 0.5;
+}
+.box7{
+	filter: blur(5px);
+}
+.box8{
+	filter: brightness(0.5);
+}
+.box9{
+	filter: contrast(30);
+}
+.box10{
+	filter: grayscale(50%);
+}
+.box11{
+	filter: invert(0);
+}
+.box12{
+	filter: sepia(80%);
+}
+.box13{
+	
+}
+
