@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taco Truck Menu</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.header {
+    background-color: #ed1abc;
+    color: white;
+    padding: 1em 0;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1em;
+    padding: 1em;
+}
+
+.menu-item {
+    background-color: #f9f9f9;
+    border: 2px solid #ed1abc;
+    padding: 1em;
+    border-radius: 8px;
+}
+
+.footer {
+    background-color: #ed1abc;
+    color: white;
+    padding: 0.5em 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+
+</style>
+</head>
+<body>
+    <header class="header">
+        <h1>Taco Truck Menu</h1>
+    </header>
+    <main class="menu">
+        <div class="menu-item">Fish Taco</div>
+        <div class="menu-item">Chicken Taco</div>
+        <div class="menu-item">Steak Taco</div>
+        <div class="menu-item">Steak Burrito</div>
+        <div class="menu-item">Chicken Burrito</div>
+        <div class="menu-item">Tofu Taco</div>
+    </main>
+    <footer class="footer">
+        <p>© 2025 Taco Truck</p>
+    </footer>
+</body>
+</html>
+
