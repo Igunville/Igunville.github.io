@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Self Portrait</title>
+    <script src="js/init.js"></script>
+    <style>
+        canvas{
+            display:block;
+            border:1px solid;
+            margin:auto;
+            margin-top:50px
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="400" height="400"></canvas>
+  
+  <script>
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+
+
+    ctx.fillStyle = 'green';
+    ctx.fillRect(0,0,400,400);
+
+    ctx.fillStyle = "#999999";
+    ctx.fillRect(10, 10, 370,370);
+
+
+    ctx.fillStyle='white';
+    ctx.beginPath();
+    ctx.ellipse(200,200,110,150,1*Math.PI,0,2*Math.PI);
+    ctx.fill();
+
+    ctx.fillStyle = "blue";
+    ctx.fillRect(125,125,50,50);
+
+    ctx.fillStyle = "blue";
+    ctx.fillRect(225,125,50,50);
+
+    ctx.fillStyle='black';
+    ctx.beginPath();
+    ctx.ellipse(200,280,75,30,2*Math.PI,0,1*Math.PI);
+    ctx.fill();
+
+
+  </script>
+</body>
+</html>
