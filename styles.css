@@ -42,3 +42,11 @@ h1{
         background: #e8a20a;
 	font-size:100%;
 }
+.color-change {
+    color: #000000;
+    transition: color 0.3s ease;
+}
+
+.color-change:hover {
+    color: #f44336;
+}
