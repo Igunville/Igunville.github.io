@@ -1,0 +1,96 @@
+body{
+    background-color: #305dcf;
+}
+
+footer{
+    position: absolute;
+    bottom: 0%;
+}
+
+.emoji{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 30px 30px 35px rgba(0,0,0,0.25);
+  background-image: radial-gradient(
+        #feca3e 58%,
+        #ff8000 80%
+    );
+}
+.eyes {
+	display: flex;
+}
+
+.eye {
+      width: 0px;
+      height: 0px;
+      border-right: 60px solid transparent;
+      border-top: 60px solid red;
+      border-left: 60px solid red;
+      border-bottom: 60px solid red;
+      border-top-left-radius: 60px;
+      border-top-right-radius: 60px;
+      border-bottom-left-radius: 60px;
+      border-bottom-right-radius: 60px;
+    }
+
+.left {
+    top: 90px;
+    left: 25%;
+}
+
+.right {
+    top: 90px;
+    right: 25%;
+}
+
+.mouth{
+    height: 100px;
+    width: 220px;
+    background-color: #663d0f;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 25px;
+    overflow: hidden;
+    border-radius: 5px 5px 180px 180px
+}
+
+.teeth{
+    height: 40px;
+    width: 220px;
+    background-color: #e9fbfa;
+    position: absolute;
+    bottom: 75px;
+    border-radius: 5px 5px 80px 80px;
+}
+
+.tongue{
+    height: 70px;
+    width: 105px;
+    position: absolute;
+    background-color: red;
+    border-radius: 50%;
+    transform: translate(50%);
+    top: 70px;
+}
+@keyframes face {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.emoji {
+    animation-name: face;
+    animation-duration: 8s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 500000000000;
+}
