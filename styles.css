@@ -50,3 +50,22 @@ h1{
 .color-change:hover {
     color: #f44336;
 }
+@media (max-width: 700px) {
+  .grid {
+    grid-template-areas:
+      'avatar'
+      'name'
+      'bio';
+  }
+}
+@media (min-width: 700px) {
+  .user-profile {
+    display: flex;
+    ...
+  }
+}
+.grid {
+  grid-template-areas:
+    'avatar name'
+    'bio    bio';
+}
