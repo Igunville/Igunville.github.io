@@ -63,4 +63,6 @@ We'll use this to inform our study plan for the test.
 
 I reviewed html comments and now think that I could get all of the questions right. I made a minimal html page and practiced the comments on it. My new score is an A
 
-for my second part i just wrote a basic html page to refressh how to do it and what tage to use. I am now confident that i will get any questions right.
+for my second part i just wrote a basic html page to refressh how to do it and what tage to use. I am now confident that i will get any questions right. I combined these two together so there is only one page that is linked below.
+
+[practice Page]("../../comments.html)
