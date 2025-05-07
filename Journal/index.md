@@ -11,3 +11,5 @@
 - [Cosmetology website](entries/5.html)
 
 - [Journal for certification exam](entries/test.md)
+
+- [Journal entry for javascript project](entries/6.md)
