@@ -23,8 +23,22 @@ function submitGuess() [
 	let guess = currentGuess.toUpperCase();
 	currentGuess = "";
 
-//I need to make a keylistner next time i work on this
-//i need to make it so it can change colors when you enter it
-// make the attmetpts go up if wrong
-// make it so when you press keys it enters
+for (let i = 0; i < cols; i++) {
+	let color = "gray"; 
+	if (word.includes(guess[i])) color = "yellow";
+	if (word(i) === (guess(i) color = "green";
+
+	let x = i * (squareSize + padding) + padding;
+	let y = attempts * (squareSize + padding) + padding;
+	
+	ctx.fillStyle = color;
+	ctx.fillRect(x, y, squareSize, squareSize);
+
+	ctx.fillStyle = "black";
+	ctx.font = "20px Arial";
+	ctx.fillText(guess[i], x + squareSize / 3, y + squareSize / 1.5);
+
+//I need to make a eventlistner next time i work on this
+//i think that the changin colors will work and i looked up how to make the letters go in the box and that has worked pretty well 
+//need to make it draw on the canvas aadn also need to make the attempts go up so a game over message is put in
 
