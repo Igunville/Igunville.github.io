@@ -1,7 +1,7 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-const word = "Pears";
+const word = "pears";
 const rows = 5;
 const cols = 5;
 const padding = 5;
@@ -17,16 +17,15 @@ for (let row = 0; row < rows; row++) {
     }
 }
 
-function submitGuess() [
+function submitGuess() {
 	if (attempts >=rows || currentGuess.length !== cols)
 
-	let guess = currentGuess.toUpperCase();
 	currentGuess = "";
 
 for (let i = 0; i < cols; i++) {
 	let color = "gray"; 
 	if (word.includes(guess[i])) color = "yellow";
-	if (word(i) === (guess(i) color = "green";
+	if (word(i) === (guess[i]) color = "green";
 
 	let x = i * (squareSize + padding) + padding;
 	let y = attempts * (squareSize + padding) + padding;
@@ -37,8 +36,15 @@ for (let i = 0; i < cols; i++) {
 	ctx.fillStyle = "black";
 	ctx.font = "20px Arial";
 	ctx.fillText(guess[i], x + squareSize / 3, y + squareSize / 1.5);
+}};
+attempts++;
 
-//I need to make a eventlistner next time i work on this
-//i think that the changin colors will work and i looked up how to make the letters go in the box and that has worked pretty well 
-//need to make it draw on the canvas aadn also need to make the attempts go up so a game over message is put in
 
+document.addEventListner("keydown" , function(event) {
+	if (event.key === "eneter") {
+	   submitGuess();
+	}else if (eent.key.length === 1 && current guess. lenth < cols) {
+	currentGuess += event.key;
+}});
+
+drawGrid();
