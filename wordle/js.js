@@ -1,7 +1,7 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-const word = "igloo";
+const word = "amaze";
 const rows = 5;
 const cols = 5;
 const padding = 5;
