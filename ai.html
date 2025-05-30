@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Purple Wordle Canvas</title>
+  <style>
+    body {
+      background-color: #70d81a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .center-canvas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+    }
+    canvas {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="center-canvas">
+    <h1>Purple Wordle</h1>
+    <p>Guess the 5-letter word!</p>
+    <canvas id="myCanvas" width="400" height="480"></canvas>
+  </div>
+  <script>
+    // --- Wordle Game Variables ---
+    const WORDS = ["APPLE", "GRAPE", "PLANT", "MOUSE", "BRAIN", "CHAIR", "HOUSE", "SHEET", "BRAVE", "CLOUD"];
+    const ANSWER = WORDS[Math.floor(Math.random() * WORDS.length)];
+    const ROWS = 6;
+    const COLS = 5;
+    let guesses = Array.from({length: ROWS}, () => Array(COLS).fill(""));
+    let currentRow = 0;
+    let currentCol = 0;
+    let gameOver = false;
+
+    // --- Canvas Setup ---
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+    const boxSize = 60;
+    const boxGap = 10;
+    const startX = (canvas.width - (COLS * boxSize + (COLS - 1) * boxGap)) / 2;
+    const startY = 40;
+
+    function drawBoard() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Draw guesses
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          let x = startX + c * (boxSize + boxGap);
+          let y = startY + r * (boxSize + boxGap);
+          // Determine color
+          let color = "#fff";
+          let border = "#bbb";
+          if (guesses[r][c]) {
+            if (r < currentRow) {
+              if (guesses[r][c] === ANSWER[c]) {
+                color = "#6aaa64"; // green
+              } else if (ANSWER.includes(guesses[r][c])) {
+                color = "#c9b458"; // yellow
+              } else {
+                color = "#787c7e"; // gray
+              }
+              border = color;
+            }
+          }
+          ctx.fillStyle = color;
+          ctx.strokeStyle = border;
+          ctx.lineWidth = 3;
+          ctx.fillRect(x, y, boxSize, boxSize);
+          ctx.strokeRect(x, y, boxSize, boxSize);
+
+          // Draw letter
+          ctx.fillStyle = "#222";
+          ctx.font = "bold 2.2rem Arial";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          if (guesses[r][c]) {
+            ctx.fillText(guesses[r][c], x + boxSize / 2, y + boxSize / 2);
+          }
+        }
+      }
+      // Draw message if game over
+      if (gameOver) {
+        ctx.fillStyle = "#800080";
+        ctx.font = "bold 2rem Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(
+          (guesses[currentRow-1].join("") === ANSWER) ? "You Win!" : `Answer: ${ANSWER}`,
+          canvas.width / 2,
+          startY + ROWS * (boxSize + boxGap) + 40
+        );
+      }
+    }
+
+    // --- Handle Keyboard Input ---
+    document.addEventListener('keydown', (e) => {
+      if (gameOver) return;
+      if (e.key === "Backspace") {
+        if (currentCol > 0) {
+          currentCol--;
+          guesses[currentRow][currentCol] = "";
+          drawBoard();
+        }
+      } else if (e.key === "Enter") {
+        if (currentCol === COLS) {
+          const guessWord = guesses[currentRow].join("");
+          if (WORDS.includes(guessWord)) {
+            currentRow++;
+            currentCol = 0;
+            drawBoard();
+            if (guessWord === ANSWER) {
+              gameOver = true;
+              drawBoard();
+            } else if (currentRow === ROWS) {
+              gameOver = true;
+              drawBoard();
+            }
+          } else {
+            // Invalid word feedback (flash red)
+            flashRow(currentRow, "#ff4d4d");
+          }
+        }
+      } else if (/^[a-zA-Z]$/.test(e.key)) {
+        if (currentCol < COLS) {
+          guesses[currentRow][currentCol] = e.key.toUpperCase();
+          currentCol++;
+          drawBoard();
+        }
+      }
+    });
+
+    function flashRow(row, color) {
+      for (let i = 0; i < 2; i++) {
+        setTimeout(() => {
+          for (let c = 0; c < COLS; c++) {
+            let x = startX + c * (boxSize + boxGap);
+            let y = startY + row * (boxSize + boxGap);
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, boxSize, boxSize);
+            ctx.strokeStyle = "#bbb";
+            ctx.strokeRect(x, y, boxSize, boxSize);
+            ctx.fillStyle = "#222";
+            ctx.font = "bold 2.2rem Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            if (guesses[row][c]) {
+              ctx.fillText(guesses[row][c], x + boxSize / 2, y + boxSize / 2);
+            }
+          }
+        }, i * 100);
+        setTimeout(drawBoard, (i + 1) * 100);
+      }
+    }
+
+    drawBoard();
+  </script>
+</body>
+</html>
