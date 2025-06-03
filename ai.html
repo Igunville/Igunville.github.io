@@ -5,7 +5,7 @@
   <title>Purple Wordle Canvas</title>
   <style>
     body {
-      background-color: #70d81a;
+      background-color: #800080; /* changed to purple */
       color: #fff;
       font-family: Arial, sans-serif;
       margin: 0;
@@ -49,6 +49,7 @@
     let currentRow = 0;
     let currentCol = 0;
     let gameOver = false;
+    let message = ""; // Add a message variable
 
     // --- Canvas Setup ---
     const canvas = document.getElementById('myCanvas');
@@ -101,11 +102,7 @@
         ctx.fillStyle = "#800080";
         ctx.font = "bold 2rem Arial";
         ctx.textAlign = "center";
-        ctx.fillText(
-          (guesses[currentRow-1].join("") === ANSWER) ? "You Win!" : `Answer: ${ANSWER}`,
-          canvas.width / 2,
-          startY + ROWS * (boxSize + boxGap) + 40
-        );
+        ctx.fillText(message, canvas.width / 2, startY + ROWS * (boxSize + boxGap) + 40);
       }
     }
 
@@ -122,14 +119,18 @@
         if (currentCol === COLS) {
           const guessWord = guesses[currentRow].join("");
           if (WORDS.includes(guessWord)) {
+            if (guessWord === ANSWER) {
+              gameOver = true;
+              message = "You Win!";
+              drawBoard();
+              return;
+            }
             currentRow++;
             currentCol = 0;
             drawBoard();
-            if (guessWord === ANSWER) {
+            if (currentRow === ROWS) {
               gameOver = true;
-              drawBoard();
-            } else if (currentRow === ROWS) {
-              gameOver = true;
+              message = `Game Over! Answer: ${ANSWER}`;
               drawBoard();
             }
           } else {
