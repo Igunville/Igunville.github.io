@@ -46,10 +46,11 @@
     const ROWS = 6;
     const COLS = 5;
     let guesses = Array.from({length: ROWS}, () => Array(COLS).fill(""));
+    let evaluations = Array.from({length: ROWS}, () => Array(COLS).fill("")); // "green", "yellow", "gray", or ""
     let currentRow = 0;
     let currentCol = 0;
     let gameOver = false;
-    let message = ""; // Add a message variable
+    let message = "";
 
     // --- Canvas Setup ---
     const canvas = document.getElementById('myCanvas');
@@ -61,25 +62,22 @@
 
     function drawBoard() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // Draw guesses
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
           let x = startX + c * (boxSize + boxGap);
           let y = startY + r * (boxSize + boxGap);
-          // Determine color
+          // Determine color based on evaluation
           let color = "#fff";
           let border = "#bbb";
-          if (guesses[r][c]) {
-            if (r < currentRow) {
-              if (guesses[r][c] === ANSWER[c]) {
-                color = "#6aaa64"; // green
-              } else if (ANSWER.includes(guesses[r][c])) {
-                color = "#c9b458"; // yellow
-              } else {
-                color = "#787c7e"; // gray
-              }
-              border = color;
-            }
+          if (evaluations[r][c] === "green") {
+            color = "#6aaa64";
+            border = "#6aaa64";
+          } else if (evaluations[r][c] === "yellow") {
+            color = "#c9b458";
+            border = "#c9b458";
+          } else if (evaluations[r][c] === "gray") {
+            color = "#787c7e";
+            border = "#787c7e";
           }
           ctx.fillStyle = color;
           ctx.strokeStyle = border;
@@ -106,6 +104,37 @@
       }
     }
 
+    // --- Evaluate guess and update evaluations array ---
+    function evaluateGuess(row) {
+      const guess = guesses[row].join("");
+      const answerArr = ANSWER.split("");
+      const guessArr = guesses[row].map((letter, index) => {
+        if (evaluations[row][index] === "green") {
+          return letter;
+        } else {
+          return null;
+        }
+      });
+
+      // First pass - check for greens
+      for (let c = 0; c < COLS; c++) {
+        if (guessArr[c] !== null) {
+          evaluations[row][c] = "green";
+        }
+      }
+
+      // Second pass - check for yellows and grays
+      for (let c = 0; c < COLS; c++) {
+        if (evaluations[row][c] === "") {
+          if (answerArr.includes(guesses[row][c])) {
+            evaluations[row][c] = "yellow";
+          } else {
+            evaluations[row][c] = "gray";
+          }
+        }
+      }
+    }
+
     // --- Handle Keyboard Input ---
     document.addEventListener('keydown', (e) => {
       if (gameOver) return;
@@ -119,6 +148,7 @@
         if (currentCol === COLS) {
           const guessWord = guesses[currentRow].join("");
           if (WORDS.includes(guessWord)) {
+            evaluateGuess(currentRow); // Evaluate the guess
             if (guessWord === ANSWER) {
               gameOver = true;
               message = "You Win!";
