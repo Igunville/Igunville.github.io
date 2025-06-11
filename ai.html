@@ -48,7 +48,7 @@
 
   let snake = [{x: 9, y: 9}];
   let direction = {x: 0, y: 0};
-  let apples = [spawnFood(), spawnFood(), spawnFood()]; // Multiple apples
+  let food = spawnFood(); // Only one apple
   let gameOver = false;
   let score = 0;
   let started = false;
@@ -60,11 +60,7 @@
         x: Math.floor(Math.random() * cols),
         y: Math.floor(Math.random() * rows)
       };
-      // Ensure no overlap with snake or other apples
-      if (
-        !snake.some(segment => segment.x === newFood.x && segment.y === newFood.y) &&
-        !apples?.some(apple => apple.x === newFood.x && apple.y === newFood.y)
-      ) {
+      if (!snake.some(segment => segment.x === newFood.x && segment.y === newFood.y)) {
         return newFood;
       }
     }
@@ -80,11 +76,9 @@
       ctx.fillRect(snake[i].x * box, snake[i].y * box, box, box);
     }
 
-    // Draw apples
-    for (let apple of apples) {
-      ctx.fillStyle = "#70d81a";
-      ctx.fillRect(apple.x * box, apple.y * box, box, box);
-    }
+    // Draw food
+    ctx.fillStyle = "#70d81a";
+    ctx.fillRect(food.x * box, food.y * box, box, box);
 
     // Draw score
     ctx.fillStyle = "#800080";
@@ -125,17 +119,11 @@
 
     snake.unshift(head);
 
-    // Check apples
-    let ateApple = false;
-    for (let i = 0; i < apples.length; i++) {
-      if (head.x === apples[i].x && head.y === apples[i].y) {
-        score++;
-        apples[i] = spawnFood();
-        ateApple = true;
-        break;
-      }
-    }
-    if (!ateApple) {
+    // Check food
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      food = spawnFood();
+    } else {
       snake.pop();
     }
 
@@ -147,7 +135,7 @@
       // Restart game on spacebar
       snake = [{x: 9, y: 9}];
       direction = {x: 0, y: 0};
-      apples = [spawnFood(), spawnFood(), spawnFood()]; // Reset apples
+      food = spawnFood(); // Reset food
       gameOver = false;
       score = 0;
       started = false;
