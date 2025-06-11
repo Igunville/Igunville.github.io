@@ -13,3 +13,5 @@
 - [Journal for certification exam](entries/test.md)
 
 - [Journal entry for javascript project](entries/6.md)
+
+- [Journal entry about ai final project](entries/7.md)
