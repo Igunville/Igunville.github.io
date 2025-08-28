@@ -50,10 +50,15 @@
   let direction = {x: 1, y: 0}; // Start moving right
   let nextDirection = {x: 1, y: 0};
   let apples = [];
-  let appleCount = 3; // Number of apples
+  let appleCount = 5; // Number of apples
   let gameOver = false;
   let score = 0;
   let highScore = Number(localStorage.getItem('snakeHighScore')) || 0;
+
+  // --- NEW: Control frame rate and snake speed ---
+  let frameRate = 60; // frames per second (draw speed)
+  let snakeSpeed = 8; // moves per second (snake speed)
+  let frameCount = 0;
 
   function spawnApple() {
     let newApple;
@@ -157,8 +162,6 @@
     if (!ateApple) {
       snake.pop();
     }
-
-    draw();
   }
 
   document.addEventListener('keydown', (e) => {
@@ -187,9 +190,21 @@
     }
   });
 
+  // --- NEW: Main loop with separate frame rate and snake speed ---
+  function gameLoop() {
+    frameCount++;
+    // Draw every frame
+    draw();
+    // Move snake only at snakeSpeed
+    if (frameCount % Math.floor(frameRate / snakeSpeed) === 0) {
+      update();
+    }
+    requestAnimationFrame(gameLoop);
+  }
+
   spawnApples();
   draw();
-  setInterval(update, 120);
+  requestAnimationFrame(gameLoop);
   </script>
 </body>
 </html>
