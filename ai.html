@@ -5,7 +5,7 @@
   <title>Snake Game</title>
   <style>
     body {
-      background-color: #e0e7ef; /* Softer background */
+      background-color: #0057b8; /* Blue background */
       color: #222;
       font-family: Arial, sans-serif;
       margin: 0;
@@ -26,7 +26,6 @@
     }
     canvas {
       background: #fff;
-      /* Remove border-radius for square corners */
       border-radius: 0;
       box-shadow: 0 4px 24px rgba(0,0,0,0.2);
       display: block;
@@ -48,43 +47,55 @@
   const cols = canvas.width / box;
 
   let snake = [{x: 9, y: 9}];
-  let direction = {x: 0, y: 0};
-  let nextDirection = {x: 0, y: 0}; // Buffer for direction changes
-  let food = spawnFood();
+  let direction = {x: 1, y: 0}; // Start moving right
+  let nextDirection = {x: 1, y: 0};
+  let apples = [];
+  let appleCount = 3; // Number of apples
   let gameOver = false;
   let score = 0;
   let highScore = Number(localStorage.getItem('snakeHighScore')) || 0;
-  let started = false;
 
-  function spawnFood() {
-    let newFood;
+  function spawnApple() {
+    let newApple;
     while (true) {
-      newFood = {
+      newApple = {
         x: Math.floor(Math.random() * cols),
         y: Math.floor(Math.random() * rows)
       };
-      if (!snake.some(segment => segment.x === newFood.x && segment.y === newFood.y)) {
-        return newFood;
+      if (
+        !snake.some(segment => segment.x === newApple.x && segment.y === newApple.y) &&
+        !apples.some(apple => apple.x === newApple.x && apple.y === newApple.y)
+      ) {
+        return newApple;
       }
     }
   }
 
+  function spawnApples() {
+    apples = [];
+    for (let i = 0; i < appleCount; i++) {
+      apples.push(spawnApple());
+    }
+  }
+
   function draw() {
-    ctx.fillStyle = "#e0e7ef";
+    ctx.fillStyle = "#0057b8"; // Blue background
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw snake
     for (let i = 0; i < snake.length; i++) {
-      ctx.fillStyle = i === 0 ? "#0057b8" : "#4fc3f7"; // Blue shades
+      ctx.fillStyle = i === 0 ? "#003366" : "#4fc3f7";
       ctx.fillRect(snake[i].x * box, snake[i].y * box, box, box);
     }
 
-    // Draw food
+    // Draw apples
     ctx.fillStyle = "#70d81a";
-    ctx.fillRect(food.x * box, food.y * box, box, box);
+    apples.forEach(apple => {
+      ctx.fillRect(apple.x * box, apple.y * box, box, box);
+    });
 
     // Draw score
-    ctx.fillStyle = "#0057b8";
+    ctx.fillStyle = "#fff";
     ctx.font = "20px Arial";
     ctx.textAlign = "left";
     ctx.fillText("Score: " + score, 10, 25);
@@ -92,7 +103,7 @@
 
     // Draw game over
     if (gameOver) {
-      ctx.fillStyle = "#0057b8";
+      ctx.fillStyle = "#fff";
       ctx.font = "bold 2rem Arial";
       ctx.textAlign = "center";
       ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2);
@@ -102,7 +113,7 @@
   }
 
   function update() {
-    if (gameOver || (direction.x === 0 && direction.y === 0)) return;
+    if (gameOver) return;
 
     // Apply buffered direction
     direction = nextDirection;
@@ -134,11 +145,16 @@
 
     snake.unshift(head);
 
-    // Check food
-    if (head.x === food.x && head.y === food.y) {
-      score++;
-      food = spawnFood();
-    } else {
+    // Check apples
+    let ateApple = false;
+    apples.forEach((apple, idx) => {
+      if (head.x === apple.x && head.y === apple.y) {
+        score++;
+        apples[idx] = spawnApple();
+        ateApple = true;
+      }
+    });
+    if (!ateApple) {
       snake.pop();
     }
 
@@ -149,12 +165,11 @@
     if (gameOver && e.key === " ") {
       // Restart game on spacebar
       snake = [{x: 9, y: 9}];
-      direction = {x: 0, y: 0};
-      nextDirection = {x: 0, y: 0};
-      food = spawnFood();
+      direction = {x: 1, y: 0};
+      nextDirection = {x: 1, y: 0};
+      spawnApples();
       gameOver = false;
       score = 0;
-      started = false;
       draw();
       return;
     }
@@ -162,20 +177,17 @@
       // Prevent reversing direction and buffer input
       if (e.key === "ArrowUp" && direction.y !== 1) {
         nextDirection = {x: 0, y: -1};
-        started = true;
       } else if (e.key === "ArrowDown" && direction.y !== -1) {
         nextDirection = {x: 0, y: 1};
-        started = true;
       } else if (e.key === "ArrowLeft" && direction.x !== 1) {
         nextDirection = {x: -1, y: 0};
-        started = true;
       } else if (e.key === "ArrowRight" && direction.x !== -1) {
         nextDirection = {x: 1, y: 0};
-        started = true;
       }
     }
   });
 
+  spawnApples();
   draw();
   setInterval(update, 120);
   </script>
