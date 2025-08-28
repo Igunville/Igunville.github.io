@@ -48,16 +48,16 @@
 
   let snake = [{x: 9, y: 9}];
   let direction = {x: 1, y: 0}; // Start moving right
-  let nextDirection = {x: 1, y: 0};
+  let directionQueue = []; // Queue for rapid direction changes
   let apples = [];
   let appleCount = 5; // Number of apples
   let gameOver = false;
   let score = 0;
   let highScore = Number(localStorage.getItem('snakeHighScore')) || 0;
 
-  // --- NEW: Control frame rate and snake speed ---
-  let frameRate = 60; // frames per second (draw speed)
-  let snakeSpeed = 8; // moves per second (snake speed)
+  // Frame rate and snake speed
+  let frameRate = 240; // High frame rate for smoothness
+  let snakeSpeed = 8; // Moves per second
   let frameCount = 0;
 
   function spawnApple() {
@@ -93,10 +93,18 @@
       ctx.fillRect(snake[i].x * box, snake[i].y * box, box, box);
     }
 
-    // Draw apples
+    // Draw apples (round)
     ctx.fillStyle = "#70d81a";
     apples.forEach(apple => {
-      ctx.fillRect(apple.x * box, apple.y * box, box, box);
+      ctx.beginPath();
+      ctx.arc(
+        apple.x * box + box / 2,
+        apple.y * box + box / 2,
+        box / 2 - 2,
+        0,
+        2 * Math.PI
+      );
+      ctx.fill();
     });
 
     // Draw score
@@ -117,11 +125,24 @@
     }
   }
 
+  function getNextDirection(currentDir) {
+    // Only allow direction changes that don't reverse
+    if (directionQueue.length === 0) return currentDir;
+    let nextDir = directionQueue.shift();
+    if (
+      (nextDir.x === -currentDir.x && nextDir.y === -currentDir.y)
+    ) {
+      // Ignore reverse direction
+      return getNextDirection(currentDir);
+    }
+    return nextDir;
+  }
+
   function update() {
     if (gameOver) return;
 
-    // Apply buffered direction
-    direction = nextDirection;
+    // Apply queued direction changes
+    direction = getNextDirection(direction);
 
     // Move snake
     const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
@@ -169,7 +190,7 @@
       // Restart game on spacebar
       snake = [{x: 9, y: 9}];
       direction = {x: 1, y: 0};
-      nextDirection = {x: 1, y: 0};
+      directionQueue = [];
       spawnApples();
       gameOver = false;
       score = 0;
@@ -177,25 +198,20 @@
       return;
     }
     if (!gameOver) {
-      // Prevent reversing direction and buffer input
-      if (e.key === "ArrowUp" && direction.y !== 1) {
-        nextDirection = {x: 0, y: -1};
-      } else if (e.key === "ArrowDown" && direction.y !== -1) {
-        nextDirection = {x: 0, y: 1};
-      } else if (e.key === "ArrowLeft" && direction.x !== 1) {
-        nextDirection = {x: -1, y: 0};
-      } else if (e.key === "ArrowRight" && direction.x !== -1) {
-        nextDirection = {x: 1, y: 0};
-      }
+      // Buffer direction changes for rapid input
+      let newDir = null;
+      if (e.key === "ArrowUp") newDir = {x: 0, y: -1};
+      else if (e.key === "ArrowDown") newDir = {x: 0, y: 1};
+      else if (e.key === "ArrowLeft") newDir = {x: -1, y: 0};
+      else if (e.key === "ArrowRight") newDir = {x: 1, y: 0};
+      if (newDir) directionQueue.push(newDir);
     }
   });
 
-  // --- NEW: Main loop with separate frame rate and snake speed ---
+  // Main loop with high frame rate and slower snake speed
   function gameLoop() {
     frameCount++;
-    // Draw every frame
     draw();
-    // Move snake only at snakeSpeed
     if (frameCount % Math.floor(frameRate / snakeSpeed) === 0) {
       update();
     }
