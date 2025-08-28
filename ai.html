@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Purple Snake Game</title>
+  <title>Snake Game</title>
   <style>
     body {
-      background-color: #48e35d;
-      color: #fff;
+      background-color: #e0e7ef; /* Softer background */
+      color: #222;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
@@ -26,7 +26,8 @@
     }
     canvas {
       background: #fff;
-      border-radius: 12px;
+      /* Remove border-radius for square corners */
+      border-radius: 0;
       box-shadow: 0 4px 24px rgba(0,0,0,0.2);
       display: block;
       margin: 0 auto;
@@ -35,7 +36,7 @@
 </head>
 <body>
   <div class="center-canvas">
-    <h1>Purple Snake</h1>
+    <h1>Snake</h1>
     <p>Use arrow keys to play!</p>
     <canvas id="snakeCanvas" width="400" height="400"></canvas>
   </div>
@@ -48,9 +49,11 @@
 
   let snake = [{x: 9, y: 9}];
   let direction = {x: 0, y: 0};
-  let food = spawnFood(); // Only one apple
+  let nextDirection = {x: 0, y: 0}; // Buffer for direction changes
+  let food = spawnFood();
   let gameOver = false;
   let score = 0;
+  let highScore = Number(localStorage.getItem('snakeHighScore')) || 0;
   let started = false;
 
   function spawnFood() {
@@ -67,12 +70,12 @@
   }
 
   function draw() {
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#e0e7ef";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw snake
     for (let i = 0; i < snake.length; i++) {
-      ctx.fillStyle = i === 0 ? "#800080" : "#b266ff";
+      ctx.fillStyle = i === 0 ? "#0057b8" : "#4fc3f7"; // Blue shades
       ctx.fillRect(snake[i].x * box, snake[i].y * box, box, box);
     }
 
@@ -81,14 +84,15 @@
     ctx.fillRect(food.x * box, food.y * box, box, box);
 
     // Draw score
-    ctx.fillStyle = "#800080";
+    ctx.fillStyle = "#0057b8";
     ctx.font = "20px Arial";
     ctx.textAlign = "left";
     ctx.fillText("Score: " + score, 10, 25);
+    ctx.fillText("High Score: " + highScore, 10, 50);
 
     // Draw game over
     if (gameOver) {
-      ctx.fillStyle = "#800080";
+      ctx.fillStyle = "#0057b8";
       ctx.font = "bold 2rem Arial";
       ctx.textAlign = "center";
       ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2);
@@ -100,12 +104,19 @@
   function update() {
     if (gameOver || (direction.x === 0 && direction.y === 0)) return;
 
+    // Apply buffered direction
+    direction = nextDirection;
+
     // Move snake
     const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
 
     // Check collision with wall
     if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
       gameOver = true;
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('snakeHighScore', highScore);
+      }
       draw();
       return;
     }
@@ -113,6 +124,10 @@
     // Check collision with self
     if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
       gameOver = true;
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('snakeHighScore', highScore);
+      }
       draw();
       return;
     }
@@ -135,7 +150,8 @@
       // Restart game on spacebar
       snake = [{x: 9, y: 9}];
       direction = {x: 0, y: 0};
-      food = spawnFood(); // Reset food
+      nextDirection = {x: 0, y: 0};
+      food = spawnFood();
       gameOver = false;
       score = 0;
       started = false;
@@ -143,17 +159,18 @@
       return;
     }
     if (!gameOver) {
+      // Prevent reversing direction and buffer input
       if (e.key === "ArrowUp" && direction.y !== 1) {
-        direction = {x: 0, y: -1};
+        nextDirection = {x: 0, y: -1};
         started = true;
       } else if (e.key === "ArrowDown" && direction.y !== -1) {
-        direction = {x: 0, y: 1};
+        nextDirection = {x: 0, y: 1};
         started = true;
       } else if (e.key === "ArrowLeft" && direction.x !== 1) {
-        direction = {x: -1, y: 0};
+        nextDirection = {x: -1, y: 0};
         started = true;
       } else if (e.key === "ArrowRight" && direction.x !== -1) {
-        direction = {x: 1, y: 0};
+        nextDirection = {x: 1, y: 0};
         started = true;
       }
     }
